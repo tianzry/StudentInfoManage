@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
 
@@ -52,12 +53,17 @@ public class LoginServlet extends HttpServlet{
 		User user = new User(userName,password);
 		Connection con = null;
 		try {
-			con = (Connection) dbUtil.getCon();
+			con = (Connection) dbUtil.getCon(); // 连接数据库
 			User currentUser = userDao.login(con, user);
 			if (currentUser == null) {
+				// 用户信息对象为空，则说明没有查询到结果
 				req.setAttribute("error", "用户名或密码错误！");
 				req.getRequestDispatcher("index.jsp").forward(req, resp);
 			} else {
+				// 获取session认证
+				HttpSession session = req.getSession();
+				session.setAttribute("currentUser", currentUser);
+				
 				// 跳转到首页
 				resp.sendRedirect("home.jsp");
 			}
