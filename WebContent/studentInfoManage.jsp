@@ -13,13 +13,14 @@
 </head>
 <body>
 	<table id="dg" title="学籍信息" class="easyui-datagrid" fitColumns="true" 
-		pagination="true" rownumbers="true" url="studentInfoList" fit="true">
+		pagination="true" singleSelect=true rownumbers="true" url="infoQuery" fit="true">
 		<thead>
 			<tr>
+				<!-- 这里的数据字段名称必须和数据库列名相同才能显示出来-->
 				<th field="id" width="60">学号</th>
-				<th field="studentName" width="60">姓名</th>
-				<th field="studentPhone" width="100">电话</th>
-				<th field="studentAddr" width="150">户籍</th>
+				<th field="name" width="60">姓名</th>
+				<th field="phone" width="100">电话</th>
+				<th field="address" width="150">户籍</th>
 			</tr>
 		</thead>
 	</table>
