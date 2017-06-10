@@ -12,6 +12,8 @@
 	<script type="text/javascript" src="jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript">
 	
+
+   
 		// 显示搜索结果
 		function searchStudentName() {
 			$('#dg').datagrid('load', {
@@ -72,7 +74,9 @@
 			$("#fm").form("submit", {
 				url:url,
 				onSubmit:function() {
+				
 					return $(this).form("validate");
+					
 				},
 				success:function(result) {
 					// 如果出错，则提示
@@ -106,8 +110,8 @@
 		function resetValues() {
 			$("#id").val("");
 			$("#name").val("");
-			$("#sex").val("");
-			$("#birthday").val("");
+			$("#sex").combo('setText','');
+			$("#birthday").combo('setText','');;
 			$("#grade").val("");
 			$("#phone").val("");
 			$("#address").val("");
@@ -156,11 +160,15 @@
 				</tr>
 				<tr>
 					<td>性别：</td>
-					<td><input type="text" name="sex" id="sex" class="easyui-validatebox" required="ture"/></td>
+					<td><select class="easyui-combobox" editable="false" panelHeight="auto" name="sex" id="sex" required="ture" style="width: 50px;">
+							<option value="男">男</option>
+							<option value="女">女</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td>生日：</td>
-					<td><input type="text" name="birthday" id="birthday" class="easyui-validatebox" required="ture"/></td>
+					<td><input name="birthday" id="birthday" class="easyui-datebox" editable="false" size="20" required="ture"/></td>
 				</tr>
 				<tr>
 					<td>均分：</td>

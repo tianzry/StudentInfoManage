@@ -18,6 +18,12 @@
 	<script type="text/javascript" src="jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript">
+	
+	    function exit(){
+	    	session.invalidate(); 
+	   		window.open('../StudentInfoManage/index.jsp','_top')
+	    } 
+	    
 		//这里的函数在页面加载完毕之后才会执行
 		$(function () {
 			var treeData = [{
@@ -64,7 +70,10 @@
 	<!-- 布局 -->
 	<div region="north" style="height: 80px; background-color: #acd598">
 		<div float:left style="margin-top: 15px;margin-left: 50px;"> <font size="6" >学籍管理系统</font> </div>
-		<div float:right align="right" style="padding-top: 1px; padding-right: 50px;">当前用户：${currentUser.userName }</div>
+		<div float:right align="right" style="padding-top: 1px; padding-right: 50px;">当前用户：${currentUser.userName } 
+			<a onclick="exit()" href="#" style="color: blue; margin-left: 5px;text-decoration: underline;">注销</a>
+		</div>
+		
 	</div>
 	
 	<div region="west" style="width:150px;" title="菜单" split="true" background-color: #00ff00">
