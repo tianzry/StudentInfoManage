@@ -50,6 +50,60 @@
 						}
 					});
 		}
+		
+		var url; //这个参数用于分辨是修改还是新增学籍信息
+		
+		// 添加学籍信息函数
+		function openStudentInfoAddDialog() {
+			$("#dlg").dialog("open").dialog("setTitle","添加学籍信息");
+			url="infoSave";
+		}
+		
+		function closeStudentInfoAddDialog() {
+			$("#dlg").dialog("close");
+			resetValues();
+		}
+		
+		function saveStudentInfo() {
+			$("#fm").form("submit", {
+				url:url,
+				onSubmit:function() {
+					return $(this).form("validate");
+				},
+				success:function(result) {
+					// 如果出错，则提示
+					if(result.errorMsg) {
+						$.messager.alert("错误", result.errorMsg);
+						return;
+					} else {
+						$.messager.alert("提示","保存成功！");
+						resetValues();
+						$("#dlg").dialog("close");
+						$("#dg").datagrid("reload");
+					}
+				}
+			});
+		}
+		
+		//修改学籍信息
+		function openStudentInfoModifyDialog() {
+			var selectedRows = $('#dg').datagrid('getSelections');
+			if (selectedRows.length != 1) {
+				$.messager.alert("提示","请选择一条要修改的数据！");
+				return;
+			}
+			
+			var row = selectedRows[0];
+			$("#dlg").dialog("open").dialog("setTitle", "编辑学籍信息");
+			$("#fm").form("load", row);
+			url="infoModify";
+		}
+		function resetValues() {
+			$("#id").val("");
+			$("#name").val("");
+			$("#phone").val("");
+			$("#address").val("");
+		}
 	</script>
 </head>
 <body>
@@ -59,21 +113,55 @@
 			<tr>
 				<!-- 这里的数据字段名称必须和数据库列名相同才能显示出来-->
 				<th field="cb" checkbox="true"></th>
-				<th field="id" width="60">学号</th>
-				<th field="name" width="60">姓名</th>
-				<th field="phone" width="100">电话</th>
+				<th field="id" width="30">学号</th>
+				<th field="name" width="20">姓名</th>
+				<th field="sex" width="10">性别</th>
+				<th field="birthday" width="20">出生日期</th>
+				<th field="grade" width="20">成绩均分</th>
+				<th field="phone" width="30">电话</th>
 				<th field="address" width="150">户籍</th>
+				
 			</tr>
 		</thead>
 	</table>
 	
 	<div id="tb">
 		<div>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" >添加</a>
+			<a href="javascript:openStudentInfoAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true" >添加</a>
 			<a href="javascript:deleteStudentInfo()" class="easyui-linkbutton" iconCls="icon-remove" plain="true" >删除</a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >修改</a>
+			<a href="javascript:openStudentInfoModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >修改</a>
 			&nbsp 姓名：&nbsp<input type="text" name="s_studentName" id="s_studentName"/> <a href="javascript:searchStudentName()" class="easyui-linkbutton" iconCls="icon-search" plain="true" >查找</a>
 		</div>
+	</div>
+	
+	<div id="dlg" class="easyui-dialog" style="width:300px; height: 260px; padding: 10px 20px"
+	 closed="true" buttons="#dlg-buttons">
+		<form id="fm" method="post">
+			<table>
+				<tr>
+					<td>学号：</td>
+					<td><input type="text" name="id" id="id" class="easyui-validatebox" required="ture"/></td>
+				</tr>
+				<tr>
+					<td>姓名：</td>
+					<td><input type="text" name="name" id="name" class="easyui-validatebox" required="ture"/></td>
+				</tr>
+				<tr>
+					<td>电话：</td>
+					<td><input type="text" name="phone" id="phone" class="easyui-validatebox" required="ture"/></td>
+				</tr>
+				<tr>
+					<td>户籍：</td>
+					<td><textarea rows="1" clos="1" name="address" id="address" class="easyui-validatebox" required="ture"></textarea></td>
+				</tr>
+			</table>
+		</form>
+		
+	</div>
+	
+	<div id="dlg-buttons">
+		<a href="javascript:saveStudentInfo()" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
+		<a href="javascript:closeStudentInfoAddDialog()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
 	</div>
 	
 </body>

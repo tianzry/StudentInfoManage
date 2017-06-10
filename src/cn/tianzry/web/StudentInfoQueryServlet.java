@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.tianzry.dao.InfoQueryDao;
+import cn.tianzry.dao.StudentInfoDao;
 import cn.tianzry.model.PageBean;
 import cn.tianzry.model.StudentInfo;
 import cn.tianzry.util.DbUtil;
@@ -20,7 +20,7 @@ import net.sf.json.JSONObject;
 public class StudentInfoQueryServlet extends HttpServlet{
 
 	DbUtil dbUtil = new DbUtil();
-	InfoQueryDao infoQueryDao = new InfoQueryDao();
+	StudentInfoDao infoQueryDao = new StudentInfoDao();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 注意这里是post
@@ -49,7 +49,7 @@ public class StudentInfoQueryServlet extends HttpServlet{
 		try {
 			con = dbUtil.getCon();
 			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(infoQueryDao.studentInfo(con, pageBean, studentInfo));
+			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(infoQueryDao.studentInfoQuery(con, pageBean, studentInfo));
 			int total = infoQueryDao.studentInfoCount(con, studentInfo);
 			// 将数据写入Json对象中
 			result.put("rows", jsonArray);

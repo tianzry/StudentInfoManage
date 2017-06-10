@@ -8,7 +8,7 @@ import cn.tianzry.model.PageBean;
 import cn.tianzry.model.StudentInfo;
 import cn.tianzry.util.StringUtil;
 
-public class InfoQueryDao {
+public class StudentInfoDao {
 	/**
 	 * 进行条件限制的查找，只查找第p页rows条数据
 	 * @param con
@@ -16,7 +16,7 @@ public class InfoQueryDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public ResultSet studentInfo(Connection con, PageBean pageBean, StudentInfo studentInfo) throws Exception {
+	public ResultSet studentInfoQuery(Connection con, PageBean pageBean, StudentInfo studentInfo) throws Exception {
 		StringBuffer sb = new StringBuffer("select * from t_studentinfo");
 		
 		// 搜索内容
@@ -66,4 +66,38 @@ public class InfoQueryDao {
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		return pstmt.executeUpdate();
 	}
+	/**
+	 * 插入数据到数据库
+	 * @param con
+	 * @param studentInfo
+	 * @return
+	 * @throws Exception
+	 */
+	public int studentInfoAdd(Connection con, StudentInfo studentInfo) throws Exception {
+		String sql = "insert into t_studentInfo values (?,?,?,?)";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, studentInfo.getId());
+		pstmt.setString(2, studentInfo.getName());
+		pstmt.setString(3, studentInfo.getPhone());
+		pstmt.setString(4, studentInfo.getAddress());
+		return pstmt.executeUpdate();
+	}
+	/**
+	 * 修改数据
+	 * @param con
+	 * @param studentInfo
+	 * @return
+	 * @throws Exception
+	 */
+	public int studengInfoModify(Connection con, StudentInfo studentInfo) throws Exception{
+		String sql = "update t_studentInfo set name=?, phone=?, address=? where id=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		
+		pstmt.setString(1, studentInfo.getName());
+		pstmt.setString(2, studentInfo.getPhone());
+		pstmt.setString(3, studentInfo.getAddress());
+		pstmt.setString(4, studentInfo.getId());
+		return pstmt.executeUpdate();
+	}
+	
 }

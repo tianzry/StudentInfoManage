@@ -39,4 +39,24 @@
   	<servlet-name>studentInfoDeleteServlet</servlet-name>
   	<url-pattern>/infoDelete</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentInfoSaveServlet</servlet-name>
+  	<servlet-class>cn.tianzry.web.StudentInfoSaveServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>studentInfoSaveServlet</servlet-name>
+  	<url-pattern>/infoSave</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+  	<servlet-name>studentInfoModifyServlet</servlet-name>
+  	<servlet-class>cn.tianzry.web.StudentInfoModifyServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>studentInfoModifyServlet</servlet-name>
+  	<url-pattern>/infoModify</url-pattern>
+  </servlet-mapping>
 </web-app>

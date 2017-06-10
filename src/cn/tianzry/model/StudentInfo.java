@@ -9,6 +9,18 @@ public class StudentInfo {
 	private String phone;
 	private String address;
 	
+	
+	
+	public StudentInfo(String id, String name, String phone, String address) {
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+	}
+	
+	public StudentInfo() {
+	}
+
 	public String getId() {
 		return id;
 	}

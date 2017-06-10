@@ -17,7 +17,7 @@ import cn.tianzry.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class StudentInfoDeleteServlet extends HttpServlet{
+public class StudentInfoSaveServlet extends HttpServlet{
 
 	DbUtil dbUtil = new DbUtil();
 	StudentInfoDao infoQueryDao = new StudentInfoDao();
@@ -29,22 +29,29 @@ public class StudentInfoDeleteServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// post 发送了page和rows每页记录数 两个参数
 		
-		String deleteIds = req.getParameter("deleteIds");
-			
+		// 注意这个编码的指定，否则会出现乱码问题
+		req.setCharacterEncoding("utf-8");
+		
+		//添加的内容
+		String id = req.getParameter("id");
+		String name = req.getParameter("name");
+		String phone = req.getParameter("phone");
+		String address = req.getParameter("address");
+		StudentInfo studentInfo = new StudentInfo(id, name, phone, address);
+		
 		Connection con = null;
 		
 		try {
 			con = dbUtil.getCon();
 			JSONObject result = new JSONObject();
-			int deleteNum = infoQueryDao.studentInfoDelete(con, deleteIds);
+			int saveNum = infoQueryDao.studentInfoAdd(con, studentInfo);
 			
 			// 根据删除的返回值，确定是否删除成功
-			if (deleteNum > 0) {
+			if (saveNum > 0) {
 				result.put("success", "true");
-				result.put("deleteNum", deleteNum);
 			} else {
+				result.put("success", "true");
 				result.put("errorMsg", "删除失败，请检查！");
 			}
 			// 将Json对象写入response中
