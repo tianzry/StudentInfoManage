@@ -62,8 +62,9 @@
 </head>
 <body class="easyui-layout">
 	<!-- 布局 -->
-	<div region="north" style="height: 80px; background-color: #eeee00">
-		<div float:right align="right" style="padding-top: 50px; padding-right: 20px;">当前用户：${currentUser.userName }</div>
+	<div region="north" style="height: 80px; background-color: #acd598">
+		<div float:left style="margin-top: 15px;margin-left: 50px;"> <font size="6" >学籍管理系统</font> </div>
+		<div float:right align="right" style="padding-top: 1px; padding-right: 50px;">当前用户：${currentUser.userName }</div>
 	</div>
 	
 	<div region="west" style="width:150px;" title="菜单" split="true" background-color: #00ff00">
@@ -74,7 +75,8 @@
 		<div class="easyui-tabs" fit="true" border="false" id="tabs">
 			<div title="首页">
 				<div align="center" >
-					<p>欢迎使用</p>
+					<p><font size="5">欢迎使用学籍管理系统</font></p>
+					<p><font size="3">使用说明：请点击左侧的导航栏项目进行选择操作！</font></p>
 				</div>
 			</div>
 		</div>

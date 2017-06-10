@@ -36,9 +36,13 @@ public class StudentInfoModifyServlet extends HttpServlet{
 		//添加的内容
 		String id = req.getParameter("id");
 		String name = req.getParameter("name");
+		String sex = req.getParameter("sex");
+		String birthday = req.getParameter("birthday");
+		String grade = req.getParameter("grade"); //注意这里可以字符串转数字
 		String phone = req.getParameter("phone");
 		String address = req.getParameter("address");
-		StudentInfo studentInfo = new StudentInfo(id, name, phone, address);
+		
+		StudentInfo studentInfo = new StudentInfo(id, name, sex, birthday, Integer.parseInt(grade),phone, address);
 		
 		Connection con = null;
 		

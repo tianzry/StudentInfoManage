@@ -31,7 +31,7 @@
 		width: 100%;
 		height: 50px;
 		display: block;
-		background-color: green;
+		background-color: #acd598;
 		float: left;
 		border-bottom: 1px solid white;
 		border-radius: 5px;

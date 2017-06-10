@@ -35,13 +35,12 @@ public class StudentInfoQueryServlet extends HttpServlet{
 		String rows = req.getParameter("rows");
 		
 		// 获取数据库返回的搜索内容
-		String studentName = req.getParameter("name");
-		if (studentName == null) {
-			studentName = "";
-		}
-		StudentInfo studentInfo = new StudentInfo();
-		studentInfo.setName(studentName);
+		String searchStr = req.getParameter("searchStr");
 		
+		if (searchStr == null) {
+			searchStr = "";
+		}
+
 		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
 		
 		Connection con = null;
@@ -49,8 +48,8 @@ public class StudentInfoQueryServlet extends HttpServlet{
 		try {
 			con = dbUtil.getCon();
 			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(infoQueryDao.studentInfoQuery(con, pageBean, studentInfo));
-			int total = infoQueryDao.studentInfoCount(con, studentInfo);
+			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(infoQueryDao.studentInfoQuery(con, pageBean, searchStr));
+			int total = infoQueryDao.studentInfoCount(con, searchStr); //TODO 
 			// 将数据写入Json对象中
 			result.put("rows", jsonArray);
 			result.put("total", total);

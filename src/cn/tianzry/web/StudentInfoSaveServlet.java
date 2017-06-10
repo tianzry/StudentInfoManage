@@ -17,6 +17,11 @@ import cn.tianzry.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+/**
+ * 插入数据的服务器端
+ * @author tianz
+ *
+ */
 public class StudentInfoSaveServlet extends HttpServlet{
 
 	DbUtil dbUtil = new DbUtil();
@@ -36,9 +41,13 @@ public class StudentInfoSaveServlet extends HttpServlet{
 		//添加的内容
 		String id = req.getParameter("id");
 		String name = req.getParameter("name");
+		String sex = req.getParameter("sex");
+		String birthday = req.getParameter("birthday");
+		String grade = req.getParameter("grade"); //注意这里可以字符串转数字
 		String phone = req.getParameter("phone");
 		String address = req.getParameter("address");
-		StudentInfo studentInfo = new StudentInfo(id, name, phone, address);
+		
+		StudentInfo studentInfo = new StudentInfo(id, name, sex, birthday, Integer.parseInt(grade),phone, address);
 		
 		Connection con = null;
 		
@@ -47,12 +56,12 @@ public class StudentInfoSaveServlet extends HttpServlet{
 			JSONObject result = new JSONObject();
 			int saveNum = infoQueryDao.studentInfoAdd(con, studentInfo);
 			
-			// 根据删除的返回值，确定是否删除成功
+			
 			if (saveNum > 0) {
 				result.put("success", "true");
 			} else {
 				result.put("success", "true");
-				result.put("errorMsg", "删除失败，请检查！");
+				result.put("errorMsg", "添加失败，请检查！");
 			}
 			// 将Json对象写入response中
 			ResponseUtil.write(resp, result);

@@ -11,10 +11,11 @@
 	<script type="text/javascript" src="jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="jquery-easyui-1.5.2/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript">
+	
 		// 显示搜索结果
 		function searchStudentName() {
 			$('#dg').datagrid('load', {
-				name:$('#s_studentName').val()
+				searchStr:$('#s_studentName').val()
 			});
 		}
 		
@@ -34,7 +35,6 @@
 			
 			// 加入逗号
 			var ids = strIds.join(",");
-			
 			$.messager.confirm("提示","您确定要删除这<font color=red>" + selectedRows.length + "</font>条数据吗？",
 					function(r) {
 						if (r){
@@ -55,8 +55,11 @@
 		
 		// 添加学籍信息函数
 		function openStudentInfoAddDialog() {
+			$("#id").attr("readOnly",false);
+			resetValues();
 			$("#dlg").dialog("open").dialog("setTitle","添加学籍信息");
 			url="infoSave";
+			
 		}
 		
 		function closeStudentInfoAddDialog() {
@@ -65,6 +68,7 @@
 		}
 		
 		function saveStudentInfo() {
+			
 			$("#fm").form("submit", {
 				url:url,
 				onSubmit:function() {
@@ -96,17 +100,21 @@
 			var row = selectedRows[0];
 			$("#dlg").dialog("open").dialog("setTitle", "编辑学籍信息");
 			$("#fm").form("load", row);
+			$("#id").attr("readOnly",true);
 			url="infoModify";
 		}
 		function resetValues() {
 			$("#id").val("");
 			$("#name").val("");
+			$("#sex").val("");
+			$("#birthday").val("");
+			$("#grade").val("");
 			$("#phone").val("");
 			$("#address").val("");
 		}
 	</script>
 </head>
-<body>
+<body style="padding: 5px;">
 	<table id="dg" title="学籍信息" class="easyui-datagrid" fitColumns="true" 
 		pagination="true" singleSelect=false rownumbers="true" url="infoQuery" fit="true" toolbar="#tb">
 		<thead>
@@ -127,14 +135,14 @@
 	
 	<div id="tb">
 		<div>
-			<a href="javascript:openStudentInfoAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true" >添加</a>
+			<a href="javascript:openStudentInfoAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true" style="margin-left: 30px;">添加</a>
 			<a href="javascript:deleteStudentInfo()" class="easyui-linkbutton" iconCls="icon-remove" plain="true" >删除</a>
 			<a href="javascript:openStudentInfoModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >修改</a>
-			&nbsp 姓名：&nbsp<input type="text" name="s_studentName" id="s_studentName"/> <a href="javascript:searchStudentName()" class="easyui-linkbutton" iconCls="icon-search" plain="true" >查找</a>
+			<input type="text" name="s_studentName" id="s_studentName" style="margin-left: 15px;margin-top: 3px;"/> <a href="javascript:searchStudentName()" class="easyui-linkbutton" iconCls="icon-search" plain="true" >查找</a>
 		</div>
 	</div>
 	
-	<div id="dlg" class="easyui-dialog" style="width:300px; height: 260px; padding: 10px 20px"
+	<div id="dlg" class="easyui-dialog" style="width:300px; height: 400px; padding: 10px 20px"
 	 closed="true" buttons="#dlg-buttons">
 		<form id="fm" method="post">
 			<table>
@@ -145,6 +153,18 @@
 				<tr>
 					<td>姓名：</td>
 					<td><input type="text" name="name" id="name" class="easyui-validatebox" required="ture"/></td>
+				</tr>
+				<tr>
+					<td>性别：</td>
+					<td><input type="text" name="sex" id="sex" class="easyui-validatebox" required="ture"/></td>
+				</tr>
+				<tr>
+					<td>生日：</td>
+					<td><input type="text" name="birthday" id="birthday" class="easyui-validatebox" required="ture"/></td>
+				</tr>
+				<tr>
+					<td>均分：</td>
+					<td><input type="text" name="grade" id="grade" class="easyui-validatebox" required="ture"/></td>
 				</tr>
 				<tr>
 					<td>电话：</td>
