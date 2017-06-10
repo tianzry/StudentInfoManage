@@ -20,7 +20,7 @@
   	<url-pattern>/login</url-pattern>
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
   	<servlet-name>studentInfoQueryServlet</servlet-name>
   	<servlet-class>cn.tianzry.web.StudentInfoQueryServlet</servlet-class>
   </servlet>
@@ -28,5 +28,15 @@
   <servlet-mapping>
   	<servlet-name>studentInfoQueryServlet</servlet-name>
   	<url-pattern>/infoQuery</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentInfoDeleteServlet</servlet-name>
+  	<servlet-class>cn.tianzry.web.StudentInfoDeleteServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>studentInfoDeleteServlet</servlet-name>
+  	<url-pattern>/infoDelete</url-pattern>
   </servlet-mapping>
 </web-app>

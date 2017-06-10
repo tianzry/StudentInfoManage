@@ -17,7 +17,7 @@ import cn.tianzry.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class StudentInfoQueryServlet extends HttpServlet{
+public class StudentInfoDeleteServlet extends HttpServlet{
 
 	DbUtil dbUtil = new DbUtil();
 	InfoQueryDao infoQueryDao = new InfoQueryDao();
@@ -31,29 +31,22 @@ public class StudentInfoQueryServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// post 发送了page和rows每页记录数 两个参数
 		
-		String page = req.getParameter("page");
-		String rows = req.getParameter("rows");
-		
-		// 获取数据库返回的搜索内容
-		String studentName = req.getParameter("name");
-		if (studentName == null) {
-			studentName = "";
-		}
-		StudentInfo studentInfo = new StudentInfo();
-		studentInfo.setName(studentName);
-		
-		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
-		
+		String deleteIds = req.getParameter("deleteIds");
+			
 		Connection con = null;
 		
 		try {
 			con = dbUtil.getCon();
 			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(infoQueryDao.studentInfo(con, pageBean, studentInfo));
-			int total = infoQueryDao.studentInfoCount(con, studentInfo);
-			// 将数据写入Json对象中
-			result.put("rows", jsonArray);
-			result.put("total", total);
+			int deleteNum = infoQueryDao.studentInfoDelete(con, deleteIds);
+			
+			// 根据删除的返回值，确定是否删除成功
+			if (deleteNum > 0) {
+				result.put("success", "true");
+				result.put("deleteNum", deleteNum);
+			} else {
+				result.put("errorMsg", "删除失败，请检查！");
+			}
 			// 将Json对象写入response中
 			ResponseUtil.write(resp, result);
 		} catch(Exception e) {
